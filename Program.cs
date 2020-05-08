@@ -17,6 +17,6 @@ namespace Bakery
       // Console.WriteLine($"Ok, that'll be {bread.Cost() + pastry.Cost()} please.");
 
    
-    }
+    } 
   }
 }
