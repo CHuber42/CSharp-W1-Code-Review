@@ -5,8 +5,10 @@ namespace Bakery
 {
   class Program
   {
+    private static int Bonus = 3;
     public static void Main()
     {
+      
         
       Console.WriteLine("Welcome to Bob's Bodacious Bagel Bakery and Breadery\nWe bake 'em, you buy 'em!\nHow many loaves of bread do you want today?");
       Item.Bread bread = new Item.Bread(validateIntInput());
@@ -15,7 +17,16 @@ namespace Bakery
       Item.Pastry pastry = new Item.Pastry(validateIntInput());
       
       PresentTotal:
+      if(checkBonus())
+      {
+        Console.WriteLine("Congratulations! You're a lucky customer! Your order is half off, but only if you check out now!");
+        Console.WriteLine($"Your grand total is: ${(bread.Cost() + pastry.Cost())/2}. Would you like to modify your cart?\n[N]o, pay and exit\nModify [B]read\nModify [P]astries");
+      }
+      else
+      {
       Console.WriteLine($"Your grand total is: ${bread.Cost() + pastry.Cost()}. Would you like to modify your cart?\n[N]o, pay and exit\nModify [B]read\nModify [P]astries");
+      }
+      
 
       switch (Console.ReadLine().ToLower())
       {
@@ -77,7 +88,18 @@ namespace Bakery
       return input;
     }
 
- 
-
+    public static bool checkBonus()
+    {
+      Bonus += 1;
+      int check = new Random().Next(1, Bonus);
+      if (check == 1)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
   }
 }
