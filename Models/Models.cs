@@ -1,33 +1,33 @@
 using System;
 using System.Collections.Generic;
 
-namespace Bakery
+namespace Bakery0
 {
-  public class Bread
+
+  public class Item
   {
-    public int Count {get; set;}
-
-    public int Cost()
+    public static int Count {get; set;}
+    public class Bread
     {
-      int costOfSets = (Count / 3) * 10;
-      int costOfExtras = (Count % 3) * 5;
+      public int Cost()
+      {
+        int costOfSets = (Count / 3) * 10;
+        int costOfExtras = (Count % 3) * 5;
 
-      return costOfSets + costOfExtras;   
-    }
-  }
-
-  
-  public class Pastry
-  {
-    public int Count {get; set;}
-
-    public int Cost()
-    {
-      int costOfSets = (Count / 3) * 5;
-      int costOfExtras = (Count % 3) * 2;
-
-      return costOfSets + costOfExtras;
+        return costOfSets + costOfExtras;   
+      }
     }
 
+    
+    public class Pastry
+    {
+      public int Cost()
+      {
+        int costOfSets = (Count / 3) * 5;
+        int costOfExtras = (Count % 3) * 2;
+        
+        return costOfSets + costOfExtras;
+      }
+    }
   }
 }
