@@ -1,14 +1,19 @@
 using System;
-using System.Collections.Generic;
 
-namespace Bakery0
+
+namespace Bakery.Models
 {
 
   public class Item
   {
     public static int Count {get; set;}
-    public class Bread
+    public class Bread : Item
     {
+      public Bread(int count)
+      {
+        Count = count;
+      }
+      
       public int Cost()
       {
         int costOfSets = (Count / 3) * 10;
@@ -19,13 +24,13 @@ namespace Bakery0
     }
 
     
-    public class Pastry
+    public class Pastry : Item
     {
       public int Cost()
       {
         int costOfSets = (Count / 3) * 5;
         int costOfExtras = (Count % 3) * 2;
-        
+
         return costOfSets + costOfExtras;
       }
     }
