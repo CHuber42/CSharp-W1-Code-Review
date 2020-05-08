@@ -16,22 +16,30 @@ namespace Bakery.Models
       
       public int Cost()
       {
-        int costOfSets = (Count / 3) * 10;
-        int costOfExtras = (Count % 3) * 5;
+        int breadSets = (Count / 3) * 10;
+        int breadExtras = (Count % 3) * 5;
+        Console.WriteLine(breadSets);
+        Console.WriteLine(breadExtras);
 
-        return costOfSets + costOfExtras;   
+        return breadSets + breadExtras;   
       }
     }
 
     
     public class Pastry : Item
     {
+      public Pastry(int count)
+      {
+        Count = count;
+      }
       public int Cost()
       {
-        int costOfSets = (Count / 3) * 5;
-        int costOfExtras = (Count % 3) * 2;
+        int pastrySets = (Count / 3);
+        int pastryExtras = (Count % 3);
+        Console.WriteLine(pastrySets);
+        Console.WriteLine(pastryExtras);
 
-        return costOfSets + costOfExtras;
+        return pastrySets + pastryExtras;
       }
     }
   }
