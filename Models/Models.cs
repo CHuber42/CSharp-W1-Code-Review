@@ -9,8 +9,16 @@ namespace Bakery.Models
 
     public void AddItems(int additionals)
     {
+      if((Count + additionals) >= 0)
+      {
       Count += additionals;
+      }
+      else
+      {
+        Console.WriteLine("What shenanigans are you up to? You can't have negative items in your cart!");
+      }
     }
+    
     public class Bread : Item
     {
       public Bread(int count)
@@ -30,6 +38,9 @@ namespace Bakery.Models
           {
             Count += 1;
             goto recount;
+          }
+          else {
+            Console.WriteLine("Well that didn't make sense to me, but I'm not gonna force you to take free/cheap items, so...");
           }
         }
         return breadSets + breadExtras;   
@@ -57,6 +68,9 @@ namespace Bakery.Models
           {
             Count += 1;
             goto recount;
+          }
+          else {
+            Console.WriteLine("Well that didn't make sense to me, but I'm not gonna force you to take free/cheap items, so...");
           }
         }
         return pastrySets + pastryExtras;
