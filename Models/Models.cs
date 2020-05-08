@@ -6,13 +6,17 @@ namespace Bakery.Models
   public class Item
   {
     private int Count {get; set;}
+
+    public void AddItems(int additionals)
+    {
+      Count += additionals;
+    }
     public class Bread : Item
     {
       public Bread(int count)
       {
       Count = count;
       }
-    
       public int Cost()
       {
         recount:
@@ -28,10 +32,10 @@ namespace Bakery.Models
             goto recount;
           }
         }
-
         return breadSets + breadExtras;   
       }
     }
+    
 
     
     public class Pastry : Item
@@ -55,7 +59,6 @@ namespace Bakery.Models
             goto recount;
           }
         }
-
         return pastrySets + pastryExtras;
       }
     }
