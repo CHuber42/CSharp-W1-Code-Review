@@ -11,21 +11,22 @@ namespace Bakery
       
         
       Console.WriteLine("Welcome to Bob's Bodacious Bagel Bakery and Breadery\nWe bake 'em, you buy 'em!");
-      Prompt1:
-      Console.WriteLine("Today we have 'Grab Bags'; for $50 get a random (between 0-20) number of loaves of bread and pastries. Want one of those, or shop normally? ([R]andom or [N]ormal) ");
-      switch (Console.ReadLine().ToLower())
-      {
-        case "n":
-          break;
-        case "r":
-          randomGoodies();
-          Environment.Exit(0);
-          break;
-        default:
-          goto Prompt1;
-
+      bool randomGoodies = true;
+      while(randomGoodies){
+        Console.WriteLine("Today we have 'Grab Bags'; for $50 get a random (between 0-20) number of loaves of bread and pastries. Want one of those, or shop normally? ([R]andom or [N]ormal) ");
+        switch (Console.ReadLine().ToLower())
+        {
+          case "n":
+            randomGoodies = false;
+            break;
+          case "r":
+            Program.randomGoodies();
+            Environment.Exit(0);
+            break;
+          default:
+            break;
+        }
       }
-
       
       Console.WriteLine("How many loaves of bread do you want today?");
       Item.Bread bread = new Item.Bread(validateIntInput());
@@ -33,55 +34,30 @@ namespace Bakery
       Console.WriteLine("Awesome. Now tell me how many Bagels you would like.");
       Item.Pastry pastry = new Item.Pastry(validateIntInput());
       
-      PresentTotal:
-      if(checkBonus())
-      {
-        Console.WriteLine("Congratulations! You're a lucky customer! Your order is half off, but only if you check out now!");
-        Console.WriteLine($"Your grand total is: ${(bread.Cost() + pastry.Cost())/2}. Would you like to modify your cart?\n[N]o, pay and exit\nModify [B]read\nModify [P]astries");
-      }
-      else
-      {
-      Console.WriteLine($"Your grand total is: ${bread.Cost() + pastry.Cost()}. Would you like to modify your cart?\n[N]o, pay and exit\nModify [B]read\nModify [P]astries");
-      }
-      
-
-      switch (Console.ReadLine().ToLower())
-      {
-        case "n":
-          Console.WriteLine("Thanks, neighbor! Come back again soon!");
-          Environment.Exit(0);
-          break;
-        case "b":
-          bread.AddItems(addOrRemove() * modificationQuantity());
-          goto case "return";
-        case "p":  
-          pastry.AddItems(addOrRemove() * modificationQuantity());
-          goto case "return";
-        default :
-          Console.WriteLine("Sorry, I didn't understand that.");
-          goto case "return";
-        case "return" :
-          goto PresentTotal;
-      }      
+      PresentTotal(bread, pastry);
+         
     }
 
     public static int addOrRemove()
     {
+      string entry = "q";
       int sign = 1;
-      Console.WriteLine("[A]dd items, or [R]emove?");
-      InvalidInput:
-      switch(Console.ReadLine().ToLower())
-      {
-        case "r":
-          sign = -1;
-          break;
-        case "a":
-          sign = 1;
-          break;
-        default:
-        Console.WriteLine("You need to tell me whether to Add ('a') or Remove ('r') items.");
-          goto InvalidInput;
-      }
+
+      while (entry != "a" && entry != "r") {};
+        Console.WriteLine("[A]dd items, or [R]emove?");
+        entry = Console.ReadLine().ToLower(); 
+        switch(entry)
+        {
+          case "r":
+            sign = -1;
+            break;
+          case "a":
+            sign = 1;
+            break;
+          default:
+            Console.WriteLine("You need to tell me whether to Add ('a') or Remove ('r') items.");
+            break;
+        }
       return sign;
     }
     public static int modificationQuantity()
@@ -92,17 +68,20 @@ namespace Bakery
 
     public static int validateIntInput()
     {
-      int input;
-      TryAgain:
-      try{
-        input = int.Parse(Console.ReadLine());
-      }
-      catch 
+      int input = 0;
+      bool isInputValid = false;
+      while(!isInputValid)
       {
-        Console.WriteLine("Sorry, it appears your input was not an integer. Try again.");
-        goto TryAgain;
+        try{
+          input = int.Parse(Console.ReadLine());
+          isInputValid = true;
+          return input;
+        }
+        catch 
+        {
+          Console.WriteLine("Sorry, it appears your input was not an integer. Try again.");
+        }
       }
-      return input;
     }
 
     public static bool checkBonus()
@@ -153,6 +132,40 @@ namespace Bakery
  
       Console.WriteLine(luckLevel + ".. but thanks for stopping in! Come again soon!");
       Environment.Exit(0);
+    }
+
+    public static void PresentTotal(Item.Bread bread, Item.Pastry pastry)
+    {
+      if(checkBonus())
+      {
+        Console.WriteLine("Congratulations! You're a lucky customer! Your order is half off, but only if you check out now!");
+        Console.WriteLine($"Your grand total is: ${(bread.Cost() + pastry.Cost())/2}. Would you like to modify your cart?\n[N]o, pay and exit\nModify [B]read\nModify [P]astries");
+      }
+      else
+      {
+      Console.WriteLine($"Your grand total is: ${bread.Cost() + pastry.Cost()}. Would you like to modify your cart?\n[N]o, pay and exit\nModify [B]read\nModify [P]astries");
+      }
+      
+
+      switch (Console.ReadLine().ToLower())
+      {
+        case "n":
+          Console.WriteLine("Thanks, neighbor! Come back again soon!");
+          Environment.Exit(0);
+          break;
+        case "b":
+          bread.AddItems(addOrRemove() * modificationQuantity());
+          goto case "return";
+        case "p":  
+          pastry.AddItems(addOrRemove() * modificationQuantity());
+          goto case "return";
+        default :
+          Console.WriteLine("Sorry, I didn't understand that.");
+          goto case "return";
+        case "return" :
+          PresentTotal(bread, pastry);
+          break;
+      }   
     }
   }
 }
