@@ -13,7 +13,7 @@ namespace Bakery
       Console.WriteLine("Welcome to Bob's Bodacious Bagel Bakery and Breadery\nWe bake 'em, you buy 'em!");
       bool randomGoodies = true;
       while(randomGoodies){
-        Console.WriteLine("Today we have 'Grab Bags'; for $50 get a random (between 0-20) number of loaves of bread and pastries. Want one of those, or shop normally? ([R]andom or [N]ormal) ");
+        Console.WriteLine("Today we have 'Grab Bags'; for $50 get a random (between 0-20) number of loaves of bread and bagels. Want one of those, or shop normally? ([R]andom or [N]ormal) ");
         switch (Console.ReadLine().ToLower())
         {
           case "n":
@@ -75,13 +75,13 @@ namespace Bakery
         try{
           input = int.Parse(Console.ReadLine());
           isInputValid = true;
-          return input;
         }
         catch 
         {
           Console.WriteLine("Sorry, it appears your input was not an integer. Try again.");
         }
       }
+      return input;
     }
 
     public static bool checkBonus()
@@ -104,7 +104,7 @@ namespace Bakery
       double loaves = new Random().Next(0, 20);
       double pastries = new Random().Next(0, 20);
       double totalValue = Math.Round((loaves * 3.33) + (pastries * 1.66), 2);
-      Console.WriteLine($"You got {loaves} loaves of bread and {pastries} pastries. Their average value is ${totalValue}.");
+      Console.WriteLine($"You got {loaves} loaves of bread and {pastries} bagels. Their average value is ${totalValue}.");
       switch(totalValue)
       {
         case double n when n > 90 :
